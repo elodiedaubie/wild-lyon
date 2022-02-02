@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les bons plans{% endblock %}
+
+{% block body %}
+    {% block header %}
+    {% endblock %}
+    {% block banner %}
+    {% endblock banner %}
+    <section class= "all-articles">
+        <h2 class="text-center text-dark bg-primary p-3 text-white">Tous les bons plans</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4 pt-5 m-5">
+            {% for article in articles %}
+            <div class="col">
+                <div class="card border border-primary">
+                <img src = "../build/images/{{ article.picture }}" class="card-img-top" alt="image of the activity">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h5 class="card-title">{{ article.title }}</h5>
+                        <i class="bi bi-heart" style="font-size: 1.5rem; color: dark;"></i>
+                    </div>
+                    <a href="{{ path("article_show", {"id": article.id}) }}" class="btn btn-dark">Découvrir</a>
+                </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

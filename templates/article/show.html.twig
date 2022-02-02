@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tous les bons plans{% endblock %}
+
+{% block body %}
+    {% block header %}
+    {% endblock %}
+    {% block banner %}
+    {% endblock banner %}
+    {<section class= "all-article">
+        <h2 class="text-center text-dark bg-primary p-3 text-white ">{{article.title}}</h2>
+        <div class="card border border-primary m-auto mt-5 mb-5 w-50" >
+            <img src = "../build/images/{{ article.picture }}" class="card-img-top" alt="{{article.title}}">
+            <div class="card-body ">
+                <div class="d-flex justify-content-between mb-3">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    
+                </div>
+                <p>{{article.description}}</p>
+            </div>
+            <div class="card-footer bg-dark text-white d-flex justify-content-around align-items-baseline p-3">
+                <p>Publié le : {{ article.date|date("m/d/Y") }}</p>
+                <a href="#" class="btn btn-light" style="width: 9rem">Modifier</a>
+                <a href="#" class="btn btn-light" style="width: 9rem">Supprimer</a>
+                <i class="bi bi-heart" style="font-size: 1.5rem; color: dark;"></i>
+            </div>
+        </div>
+    </section>
+{% endblock %}
