@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}{% endblock %} | Wild Lyon</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -14,29 +14,45 @@
         {% endblock %}
     </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light ">
-            <div class="container-fluid">
-                <a class="navbar-brand fs-2 text-dark" href="{{ path("home") }}">
-                    <img src="{{ asset('build/images/logo.png') }}" alt="logo" width="30" height="30" class="d-inline-block align-text-top ">
-                    Wild Lyon
-                  </a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <div class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-end">
-                  <div class="nav-item d-flex">
-                    <i class="bi bi-heart" style="font-size: 1.5rem; color: dark;"></i>
-                    <a class="nav-link active text-dark" aria-current="page" href="#">Favoris</a>
-                  </div>
-                  <div class="nav-item d-flex">
-                    <i class="bi bi-person-fill" style="font-size: 2rem; color: dark;"></i>
-                    <a class="nav-link active text-dark" href="#">Connexion</a>
-                  </div>
+        {% block header %}
+            <header class="bg-primary d-flex flex-column" style="height: 300px;">
+        {% endblock %}
+            <nav class="navbar navbar-expand-lg navbar-light ">
+                <div class="container-fluid">
+                    <a class="navbar-brand fs-2 text-dark" href="{{ path("home") }}">
+                        <img src="{{ asset('build/images/logo.png') }}" alt="logo" width="30" height="30" class="d-inline-block align-text-top ">
+                        Wild Lyon
+                    </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                    <div class="navbar-nav d-flex">
+                        <div class="nav-item d-flex fs-5 ">
+                            <a class="nav-link active text-dark" aria-current="page" href="#">Favoris</a>
+                        </div>
+                        <div class="nav-item d-flex fs-5">
+                            <a class="nav-link active text-dark" href="#">Connexion</a>
+                        </div>
+                        <div class="nav-item d-flex fs-5">
+                            <a class="nav-link active text-dark" href="#">Contribuer</a>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                </div>
+            </nav>
+        {% block headertitle %}
+            <h1 class="fs-1 text-end text-white pt-5 pe-5 align-item-end">PARTAGEZ, VISITEZ, RECOMMENCEZ</h1>
+        {% endblock headertitle %}
+        {% block banner %}
+            <div>
+                <img src="{{ asset('build/images/home-image.png') }}" class="ms-5 shadow" alt="homme cherchant sur une carte" width="300" height="300">
             </div>
-          </nav>
-        {% block body %}{% endblock %}
+            
+        {% endblock banner %}
+        </header>
+        {% block body %}
+
+        {% endblock %}
     </body>
 </html>
