@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contribuez{% endblock %}
+
+{% block body %}
+    {% block header %}
+    {% endblock %}
+    {% block banner %}
+    {% endblock banner %}
+    <section class= "new-form">
+        <h2 class="text-center text-dark bg-primary p-3 text-white">Ajoutez un nouveau bon plan</h2>
+
+        <div class="card m-auto mb-5 mt-5 bg-secondary m-75" style="min-width:300px; max-width: 600px">
+            <div class="card-body">
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+                    <div class="mb-3">
+                        {{ form_label(form.title, 'Titre', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.title) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.district, 'Quartier de Lyon', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.district, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.district) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.description, 'Décrivez votre bon plan', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.description) }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(form.picture, 'Importer une photo', {'attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(form.picture, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(form.picture) }}
+                    </div>
+                    <button type="submit" class="btn btn-dark">Ajouter</button>
+                {{ form_end(form) }}
+            </div>
+          </div>
+    </section>
+{% endblock %}
