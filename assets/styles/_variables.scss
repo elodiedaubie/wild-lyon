@@ -1,5 +1,14 @@
+@font-face { 
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Regular.ttf');
+}
+
+@font-face { 
+    font-family: 'Source Code Pro';
+    src: url('../fonts/SourceCodePro-Regular.ttf');
+} 
+
 $primary : #8B865C;
 $secondary: #EEBC73;
 $dark: #363D43;
 $danger: #D03431;
-

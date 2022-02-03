@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Article;
+use App\Entity\User;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -89,7 +90,7 @@ class ArticleController extends AbstractController
     /**
      * @Route("/{id}/edit", name="edit", requirements={"id"="\d+"}, methods={"GET", "POST"})
      */
-    public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Article $article): Response
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
@@ -118,7 +119,7 @@ class ArticleController extends AbstractController
                 $article->setPicture($newFilename);
             }
             $article->setDate((new DateTime()));
-            $entityManager->flush();
+            $this->entityManagerInterface->flush();
 
             return $this->redirectToRoute('articles_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -133,7 +134,7 @@ class ArticleController extends AbstractController
      * @Route("/{id}/delete", name="delete", requirements={"id"="\d+"}, methods={"POST"})
      */
 
-    public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, Article $article): Response
     {
         // Check wether the logged in user is the owner of the article or the admin
         if (!($this->getUser() === $article->getAuthor()) && in_array('ROLE_ADMIN',$this->getUser()->getRoles()) === false) {
@@ -142,10 +143,28 @@ class ArticleController extends AbstractController
         }
 
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($article);
-            $entityManager->flush();
+            $this->entityManagerInterface->remove($article);
+            $this->entityManagerInterface->flush();
         }
 
         return $this->redirectToRoute('articles_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+     * @Route("/{id}/favorites", name="favorites", requirements={"id"="\d+"}, methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function addToFavoriteList(Request $request, Article $article): Response
+    {
+        if ($this->getUser() !== null) {
+            if ($this->getUser()->isInFavorites($article)) {
+                $this->getUser()->removeFavorite($article);
+            } else {
+                $this->getUser()->addFavorite($article);
+            }
+            $this->entityManagerInterface->flush();
+        } 
+        
+        return $this->redirectToRoute('favorite', [], Response::HTTP_SEE_OTHER);
     }
 }
