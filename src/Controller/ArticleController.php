@@ -32,7 +32,7 @@ class ArticleController extends AbstractController
     public function index(ArticleRepository $articleRepository): Response
     {
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articleRepository->findBy([], ['date' => 'DESC']),
         ]);
     }
 
@@ -83,7 +83,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="edit", requirements={"id"="\d+"}, methods={"GET", "POST"})
      */
     public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
@@ -119,5 +119,17 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    
+     /**
+     * @Route("/{id}/delete", name="delete", requirements={"id"="\d+"}, methods={"POST"})
+     */
+
+    public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($article);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('articles_index', [], Response::HTTP_SEE_OTHER);
+    }
 }
