@@ -13,13 +13,13 @@
             {% for article in articles %}
             <div class="col">
                 <div class="card border border-primary">
-                <img src = "../build/images/{{ article.picture }}" class="card-img-top" alt="image of the activity">
+                <img src = "../upload/{{ article.picture }}" class="card-img-top" style="height: 200px;" "alt="image de {{ article.title }}">
                 <div class="card-body">
                     <div class="d-flex justify-content-between mb-3">
                         <h5 class="card-title">{{ article.title }}</h5>
                         <i class="bi bi-heart" style="font-size: 1.5rem; color: dark;"></i>
                     </div>
-                    <a href="{{ path("article_show", {"id": article.id}) }}" class="btn btn-dark">Découvrir</a>
+                    <a href="{{ path("articles_show", {"id": article.id}) }}" class="btn btn-dark">Découvrir</a>
                 </div>
                 </div>
             </div>
