@@ -35,7 +35,7 @@
                             <a class="nav-link active text-dark" href="#">Connexion</a>
                         </div>
                         <div class="nav-item d-flex fs-5">
-                            <a class="nav-link active text-dark" href="#">Contribuer</a>
+                            <a class="nav-link active text-dark" href="{{ path("articles_new") }}">Contribuer</a>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,6 @@
             <div>
                 <img src="{{ asset('build/images/home-image.png') }}" class="ms-5 shadow" alt="homme cherchant sur une carte" width="300" height="300">
             </div>
-            
         {% endblock banner %}
         </header>
         {% block body %}

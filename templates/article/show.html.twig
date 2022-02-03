@@ -7,14 +7,14 @@
     {% endblock %}
     {% block banner %}
     {% endblock banner %}
+    
     {<section class= "all-article">
         <h2 class="text-center text-dark bg-primary p-3 text-white ">{{article.title}}</h2>
         <div class="card border border-primary m-auto mt-5 mb-5 w-50" >
-            <img src = "../build/images/{{ article.picture }}" class="card-img-top" alt="{{article.title}}">
+            <img src = "../upload/{{ article.picture }}" class="card-img-top" style="height: 400px;" alt="image de {{article.title}}">
             <div class="card-body ">
                 <div class="d-flex justify-content-between mb-3">
                     <h5 class="card-title">{{ article.title }}</h5>
-                    
                 </div>
                 <p>{{article.description}}</p>
             </div>
