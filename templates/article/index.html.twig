@@ -8,6 +8,7 @@
     {% block banner %}
     {% endblock banner %}
     <section class= "all-articles">
+        {% include "_flashmessages.html.twig" %}
         <h2 class="text-center text-dark bg-primary p-3 text-white">Tous les bons plans</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4 pt-5 m-5">
             {% for article in articles %}
