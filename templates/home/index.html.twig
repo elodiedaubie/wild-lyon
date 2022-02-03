@@ -8,42 +8,20 @@
     {% include "_flashmessages.html.twig" %}
     <h2 class="text-center text-dark">Vos dernières découvertes</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4 pt-5 m-5">
-        <div class="col">
-            <div class="card border border-primary">
-            <img src = "{{ asset('build/images/example-image.png') }}" class="card-img-top" alt="image of the activity">
-            <div class="card-body">
-                <div class="d-flex justify-content-between mb-3">
-                    <h5 class="card-title">Card title</h5>
-                    <i class="bi bi-heart" style="font-size: 1.5rem; color: dark;"></i>
-                </div>
-                <a href="#" class="btn btn-dark">Découvrir</a>
+    {% for article in articles %}
+    <div class="col">
+        <div class="card border border-primary">
+            <img src = "../upload/{{ article.picture }}" class="card-img-top" style="height: 200px; width:auto" alt="image de {{ article.title }}">
+        <div class="card-body">
+            <div class="d-flex justify-content-between mb-3">
+                <h5 class="card-title">{{ article.title }}</h5>
+                <i class="bi bi-heart" style="font-size: 1.5rem; color: dark;"></i>
             </div>
-            </div>
+            <a href="#" class="btn btn-dark">Découvrir</a>
         </div>
-        <div class="col">
-            <div class="card border border-primary">
-            <img src="{{ asset('build/images/example-image.png') }}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <div class="d-flex justify-content-between mb-3">
-                    <h5 class="card-title">Card title</h5>
-                    <i class="bi bi-heart" style="font-size: 1.5rem; color: dark;"></i>
-                </div>
-                <a href="#" class="btn btn-dark">Découvrir</a>
-            </div>
-            </div>
         </div>
-        <div class="col">
-            <div class="card border border-primary">
-            <img src="{{ asset('build/images/example-image.png') }}" class="card-img-top" alt="...">
-            <div class="card-body">
-                <div class="d-flex justify-content-between mb-3">
-                    <h5 class="card-title">Card title</h5>
-                    <i class="bi bi-heart" style="font-size: 1.5rem; color: dark;"></i>
-                </div>
-                <a href="#" class="btn btn-dark">Découvrir</a>
-            </div>
-            </div>
-        </div>
+    </div>
+    {% endfor %}
     </div>
 </section>
 <section class="all-articles">
