@@ -51,7 +51,6 @@ class ArticleController extends AbstractController
             $picture = $form->get('picture')->getData();
             
             $newFilename = 'photo-' . uniqid() . '.' . $picture->guessExtension();
-            //dd($newFilename);
             try {
                 $picture->move(
                     $this->getParameter('pictures_directory'),
@@ -80,6 +79,43 @@ class ArticleController extends AbstractController
     {
         return $this->render('article/show.html.twig', [
             'article' => $article
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
+     */
+    public function edit(Request $request, Article $article, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // verification upload picture
+            $picture = $form->get('picture')->getData();
+            
+            if ($picture !== null) {
+                $newFilename = 'photo-' . uniqid() . '.' . $picture->guessExtension();
+            
+                try {
+                    $picture->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('danger', $e->getMessage());
+                }
+                $article->setPicture($newFilename);
+            }
+            
+            $entityManager->flush();
+
+            return $this->redirectToRoute('articles_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('article/edit.html.twig', [
+            'article' => $article,
+            'form' => $form,
         ]);
     }
 

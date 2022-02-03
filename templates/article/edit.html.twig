@@ -1,16 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contribuez{% endblock %}
+{% block title %}Modification{% endblock %}
 
 {% block body %}
     {% block header %}
     {% endblock %}
     {% block banner %}
     {% endblock banner %}
-    <section class= "new-form">
-        <h2 class="text-center text-dark bg-primary p-3 text-white">Ajoutez un nouveau bon plan</h2>
-
-        <div class="card m-auto mb-5 mt-5 bg-secondary m-75" style="min-width:300px; max-width: 600px">
+    <section class= "modification-form">
+        <h2 class="text-center text-dark bg-primary p-3 text-white">Modifiez votre bon plan</h2>
+       <div class="card m-auto mb-5 mt-5 bg-secondary m-75" style="min-width:300px; max-width: 600px">
             <div class="card-body">
                 {{ form_start(form) }}
                 {{ form_errors(form) }}
@@ -34,7 +33,7 @@
                         {{ form_widget(form.picture, {'attr': {'class': 'form-control'}}) }}
                         {{ form_errors(form.picture) }}
                     </div>
-                    <button type="submit" class="btn btn-dark">Ajouter</button>
+                    <button type="submit" class="btn btn-dark">Modifier</button>
                 {{ form_end(form) }}
             </div>
           </div>
