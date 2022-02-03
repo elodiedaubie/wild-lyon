@@ -32,7 +32,11 @@
                             <a class="nav-link active text-dark" aria-current="page" href="#">Favoris</a>
                         </div>
                         <div class="nav-item d-flex fs-5">
-                            <a class="nav-link active text-dark" href="#">Connexion</a>
+                            {% if app.user %}
+                                <a class="nav-link active text-dark" href="{{ path('app_logout') }}">Déconnexion</a>
+                            {% else %}
+                                <a class="nav-link active text-dark" href="{{ path("login") }}">Connexion</a>
+                            {% endif %}
                         </div>
                         <div class="nav-item d-flex fs-5">
                             <a class="nav-link active text-dark" href="{{ path("articles_new") }}">Contribuer</a>

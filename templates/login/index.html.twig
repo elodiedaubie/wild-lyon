@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    {% block header %}
+    {% endblock %}
+    {% block banner %}
+    {% endblock banner %}
+    {% include "_flashmessages.html.twig" %}
+    <section class= "connection-form">
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+        <h2 class="text-center text-dark bg-primary p-3 text-white">Connexion</h2>
+        <div class="card m-auto mb-5 mt-5 bg-secondary m-75" style="min-width:300px; max-width: 600px">
+            <div class="card-body">
+                <form action="{{ path('login') }}" method="post">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="username" name="_username" value="{{ last_username }}"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mot de passe</label>
+                        <input type="password" class="form-control" id="password" name="_password"/>
+                    </div>
+                    <input type="hidden" name="home" value="/"/>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-dark" >Me connecter</button>
+                    </div>
+                    <div class="mb-3">
+                        <a href="{{ path('app_register') }}" class="text-dark"><p>Je n'ai pas de compte</p></a>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </section>
+{% endblock %}
