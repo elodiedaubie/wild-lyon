@@ -2,7 +2,19 @@
 @import '~bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons.css'; 
 
+* {
+    font-family: 'Roboto','Segoe UI', Tahoma, Verdana, sans-serif;
+}
+
 body {
     box-sizing: border-box;
     margin: 0;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Source Code Pro','Segoe UI', Tahoma, Verdana, sans-serif;
+}
+
+a {
+   color: #D03431;
 }

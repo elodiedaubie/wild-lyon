@@ -49,9 +49,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $articles;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Article::class, inversedBy="favoriteOwners")
+     * @ORM\JoinTable(name="favoriteList")
+     */
+    private Collection $favorites;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->favoriteList = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -184,4 +192,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getFavorites(): Collection
+    {
+        return $this->favorites;
+    }
+
+    public function addFavorite(Article $favorite): self
+    {
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites[] = $favorite;
+        }
+
+        return $this;
+    }
+
+    public function removeFavorite(Article $favorite): self
+    {
+        $this->favorites->removeElement($favorite);
+
+        return $this;
+    }
+
+    public function isInFavorites(Article $article): bool
+    {
+        if ($this->favorites->contains($article)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
