@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/articles", name="articles_")
@@ -32,12 +34,13 @@ class ArticleController extends AbstractController
     public function index(ArticleRepository $articleRepository): Response
     {
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articleRepository->findBy([], ['date' => 'DESC']),
         ]);
     }
 
     /**
      * @Route("/new", name="new")
+     * @IsGranted("ROLE_USER")
      */
     public function addArticle(Request $request): Response 
     {
@@ -61,6 +64,7 @@ class ArticleController extends AbstractController
             }
             $article->setPicture($newFilename);
             $article->setDate((new DateTime()));
+            $article->setAuthor($this->getUser());
             $this->entityManagerInterface->persist($article);
             $this->entityManagerInterface->flush($article);
             $this->addFlash('success', 'Votre bon plan a bien été enregistré');
@@ -89,6 +93,12 @@ class ArticleController extends AbstractController
     {
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
+        
+        // Check wether the logged in user is the owner of the article or the admin
+        if (!($this->getUser() === $article->getAuthor()) && in_array('ROLE_ADMIN',$this->getUser()->getRoles()) === false) {
+            $this->addFlash('danger', 'seul l\'auteur.e de cet article a le droit de le modifier');
+            return $this->redirectToRoute('articles_index', [], Response::HTTP_SEE_OTHER);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             // verification upload picture
@@ -125,6 +135,12 @@ class ArticleController extends AbstractController
 
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
+        // Check wether the logged in user is the owner of the article or the admin
+        if (!($this->getUser() === $article->getAuthor()) && in_array('ROLE_ADMIN',$this->getUser()->getRoles()) === false) {
+            $this->addFlash('danger', 'seul l\'auteur.e de cet article a le droit de le supprimer');
+            return $this->redirectToRoute('articles_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
             $entityManager->remove($article);
             $entityManager->flush();
