@@ -50,11 +50,6 @@ class Article
     private string $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private string $district;
-
-    /**
      * @ORM\Column(type="text")
      */
     private string $description;
@@ -67,7 +62,12 @@ class Article
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $picture;
+    private string $picture;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=District::class, inversedBy="articles")
+     */
+    private ?District $district;
 
     public function getId(): ?int
     {
@@ -82,18 +82,6 @@ class Article
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getDistrict(): ?string
-    {
-        return $this->district;
-    }
-
-    public function setDistrict(string $district): self
-    {
-        $this->district = $district;
 
         return $this;
     }
@@ -130,6 +118,18 @@ class Article
     public function setPicture(string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getDistrict(): ?District
+    {
+        return $this->district;
+    }
+
+    public function setDistrict(?District $district): self
+    {
+        $this->district = $district;
 
         return $this;
     }
