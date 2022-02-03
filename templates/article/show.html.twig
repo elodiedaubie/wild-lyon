@@ -21,7 +21,10 @@
             <div class="card-footer bg-dark text-white d-flex justify-content-around align-items-baseline p-3">
                 <p>Publié le : {{ article.date|date("d/m/Y") }}</p>
                 <a href="{{ path("articles_edit", {"id": article.id}) }}" class="btn btn-light" style="width: 9rem">Modifier</a>
-                <a href="#" class="btn btn-light" style="width: 9rem">Supprimer</a>
+                <form method="post" action="{{ path('articles_delete', {'id': article.id}) }}" onsubmit="return confirm('Êtes-vous sûr.e de voulor supprimer ce bon plan?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
+                    <button type="submit"class="btn btn-light" style="width: 9rem">Supprimer</button>
+                </form>
                 <i class="bi bi-heart" style="font-size: 1.5rem; color: dark;"></i>
             </div>
         </div>
