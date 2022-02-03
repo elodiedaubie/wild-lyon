@@ -47,7 +47,7 @@ class ArticleType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Image([
-                        'maxSize' => '150k',
+                        'maxSize' => '300k',
                         'maxSizeMessage' => 'Votre image ne doit pas depasser 150Ko.',
                     ])
                 ],
