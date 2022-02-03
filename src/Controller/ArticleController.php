@@ -107,7 +107,7 @@ class ArticleController extends AbstractController
                 }
                 $article->setPicture($newFilename);
             }
-            
+            $article->setDate((new DateTime()));
             $entityManager->flush();
 
             return $this->redirectToRoute('articles_index', [], Response::HTTP_SEE_OTHER);
