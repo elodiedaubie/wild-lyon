@@ -164,7 +164,7 @@ class ArticleController extends AbstractController
             }
             $this->entityManagerInterface->flush();
         } 
-
-        return $this->redirectToRoute('articles_index', [], Response::HTTP_SEE_OTHER);
+        
+        return $this->redirectToRoute('favorite', [], Response::HTTP_SEE_OTHER);
     }
 }

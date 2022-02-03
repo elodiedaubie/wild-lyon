@@ -1,3 +1,7 @@
-<a href="{{ path('articles_favorites', {id: article.id})}}"> 
-    <i class="bi {{ app.user.isInFavorites(article) ? 'bi-heart-fill' : 'bi-heart' }}" style="font-size: 1.5rem; color: dark;"></i>
-</a>
+{% if app.user %}
+    <a href="{{ path('articles_favorites', {id: article.id})}}"> 
+        <i class="bi {{ app.user.isInFavorites(article) ? 'bi-heart-fill' : 'bi-heart' }}" style="font-size: 1.5rem; color: dark;"></i>
+    </a>
+{% else %}
+    <i class="bi bi-heart invisible"></i>
+{% endif %}
