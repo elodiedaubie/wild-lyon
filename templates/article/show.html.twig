@@ -18,6 +18,10 @@
                     <h5 class="card-title">{{ article.title }}</h5>
                 </div>
                 <p>{{article.description}}</p>
+                <div class="d-flex justify-content-between">
+                    <p class="card-text fw-bolder">Quartier {{ article.district.name }}</p>
+                    <p class="card-text fs-italic">Partagé par {{ article.author.pseudo }}</p>
+                </div>
             </div>
             <div class="card-footer bg-dark text-white d-flex justify-content-around align-items-baseline p-3">
                 <p>Publié le : {{ article.date|date("d/m/Y") }}</p>
