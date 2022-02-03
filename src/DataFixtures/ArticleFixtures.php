@@ -25,6 +25,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         );
         $article->setDistrict($this->getReference('district_' . $i));
         $article->setDate((new DateTime()));
+        $article->setAuthor($this->getReference('user_0'));
         $article->setPicture('example-image.png');
         $manager->persist($article);
         }

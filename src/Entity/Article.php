@@ -69,6 +69,11 @@ class Article
      */
     private ?District $district;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articles")
+     */
+    private $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -130,6 +135,18 @@ class Article
     public function setDistrict(?District $district): self
     {
         $this->district = $district;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
