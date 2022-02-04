@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\ArticleRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -72,7 +74,17 @@ class Article
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articles")
      */
-    private $author;
+    private User $author;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="Favorites")
+     */
+    private Collection $favoriteOwners;
+
+    public function __construct()
+    {
+        $this->favoriteOwners = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -149,5 +161,38 @@ class Article
         $this->author = $author;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getFavoriteOwners(): Collection
+    {
+        return $this->favoriteOwners;
+    }
+
+    public function addFavoriteOwner(User $favoriteOwner): self
+    {
+        if (!$this->favoriteOwners->contains($favoriteOwner)) {
+            $this->favoriteOwners[] = $favoriteOwner;
+            $favoriteOwner->addFavorite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteOwner(User $favoriteOwner): self
+    {
+        if ($this->favoriteOwners->removeElement($favoriteOwner)) {
+            $favoriteOwner->removeFavorite($this);
+        }
+
+        return $this;
+    }
+
+    //solve proxy error message at user connexion
+    public function __sleep()
+    {
+        return [];
     }
 }
